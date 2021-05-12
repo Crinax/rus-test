@@ -35,11 +35,17 @@ class Answers {
             ]
         };
     }
+    get() {
+        return this.data;
+    }
     getQuest(type, number) {
         return this.data[type][number][0];
     }
     getQuests(type) {
         return this.data[type];
+    }
+    getTypes() {
+        return Object.keys(this.data);
     }
     getAnswer(type, number) {
         return this.data[type][number][1];

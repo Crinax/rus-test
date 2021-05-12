@@ -11,7 +11,7 @@ class CheckAccent extends React.Component {
         super(props);
         this.state = {
             isWrongAnswer: false,
-            data: new Answers()
+            data: (new Answers()).get()
         }
         this.renderSwitchParam = this.renderSwitchParam.bind(this);
         this.sendForm = this.sendForm.bind(this);
@@ -87,7 +87,7 @@ class CheckAccent extends React.Component {
             element = this.renderAnswer(key, randomInt(0, 14));
         }
         return (
-            {element}
+            <div>{element}</div>
         );
     }
 }
