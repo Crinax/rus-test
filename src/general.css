@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-.accent-form-wrapper {
+.accent-form-wrapper, .wrong-answer {
     width: 30vw;
     height: 40vh;
     display: flex;
@@ -49,13 +49,17 @@ body {
 .answer-field::placeholder {
     color: #fff8;
 }
-.accent-form-wrapper .send-form-field {
+.btn {
+    text-decoration: none;
+}
+.accent-form-wrapper .send-form-field, .btn-update {
     padding: 1vh 2vw;
     background-color: #5555ff;
     border-radius: 25px;
     border: none;
     color: #fff;
     cursor: pointer;
+    outline: none;
     box-shadow: 0 0 0 0 #000;
     transition: box-shadow .3s;
 }
