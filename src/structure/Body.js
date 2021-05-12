@@ -39,7 +39,7 @@ class CheckAccent extends React.Component {
                 <p className="wrong-answer__true-answer true-answer">
                     Правильный ответ: <b className="true-answer__value">{this.state.data[this.state.typeOfWrongAnswer][this.state.numOfWrongAnswer][1]}</b>
                 </p>
-                <a className="btn btn-update" href='/'>Обновить</a>
+                <a className="btn btn-update" href='/' autoFocus>Обновить</a>
             </div>
         )
     }
