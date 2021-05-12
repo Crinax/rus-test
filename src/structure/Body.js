@@ -22,6 +22,10 @@ class CheckAccent extends React.Component {
         this.setRightAnswer = this.setRightAnswer.bind(this);
         this.renderAnswer = this.renderAnswer.bind(this);
         this.renderWrongAnswer = this.renderWrongAnswer.bind(this);
+        this.update = this.update.bind(this);
+    }
+    update() {
+        window.location.href = '';
     }
     renderAnswer(key, index) {
         return (
@@ -39,9 +43,9 @@ class CheckAccent extends React.Component {
                 <p className="wrong-answer__true-answer true-answer">
                     Правильный ответ: <b className="true-answer__value">{this.state.data[this.state.typeOfWrongAnswer][this.state.numOfWrongAnswer][1]}</b>
                 </p>
-                <a className="btn btn-update" href='/' autoFocus>Обновить</a>
+                <button className="btn btn-update" onClick={this.update} autoFocus>Обновить</button>
             </div>
-        )
+        );
     }
     setWrongAnswer(type, num) {
         this.setState({isWrongAnswer: true, numOfWrongAnswer: num, typeOfWrongAnswer: type});
@@ -54,9 +58,6 @@ class CheckAccent extends React.Component {
         var field = document.querySelector('.answer-field');
         var numQuest = document.querySelector('.question-word').classList[1].split('-')[1];
         var type = document.querySelector('.question').classList[1].split('-')[1];
-        console.log(field, numQuest, type);
-        console.log(field.value, this.state.data[type][numQuest][1]);
-        console.log(field.value !== this.state.data[type][numQuest][1]);
         if (field.value !== this.state.data[type][numQuest][1]) {
             this.setWrongAnswer(type, numQuest);
         }
