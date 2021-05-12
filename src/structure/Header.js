@@ -2,7 +2,6 @@ import React from 'react';
 
 class ALink extends React.Component {
     render() {
-        console.log(this.props);
         var href = this.props.href || '#';
         var alinks = [];
         var count = this.props.count || '1';

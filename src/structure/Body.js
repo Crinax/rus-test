@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from 'react';
 import Answers from '../answers/answers.js'
 
@@ -11,6 +12,8 @@ class CheckAccent extends React.Component {
         super(props);
         this.state = {
             isWrongAnswer: false,
+            numOfWrongAnswer: -1,
+            typeOfWrongAnswer: '',
             data: (new Answers()).get()
         }
         this.renderSwitchParam = this.renderSwitchParam.bind(this);
@@ -27,31 +30,40 @@ class CheckAccent extends React.Component {
             </form>
         );
     }
-    renderWrongAnswer(key, index) {
+    renderWrongAnswer() {
         return (
-            <div>
-                <p>Неправильный ответ!</p>
-                <p>Правильный ответ: <b>Пока не сделан</b></p>
+            <div className="wrong-answer">
+                <p className="wrong-answer__text">
+                    Неправильный ответ!
+                </p>
+                <p className="wrong-answer__true-answer true-answer">
+                    Правильный ответ: <b className="true-answer__value">{this.state.data[this.state.typeOfWrongAnswer][this.state.numOfWrongAnswer][1]}</b>
+                </p>
+                <a className="btn btn-update" href='/'>Обновить</a>
             </div>
         )
     }
-    setWrongAnswer() {
-        this.setState({isWrongAnswer: false});
+    setWrongAnswer(type, num) {
+        this.setState({isWrongAnswer: true, numOfWrongAnswer: num, typeOfWrongAnswer: type});
     }
     setRightAnswer() {
-        this.setState({isWrongAnswer: true});
+        this.setState({isWrongAnswer: false});
     }
     sendForm(event) {
+        event.preventDefault();
         var field = document.querySelector('.answer-field');
-        var numQuest = document.querySelector('.question-word').classList()[1].split('-')[1];
-        var type = document.querySelector('.question').classList()[1].split('-')[1];
+        var numQuest = document.querySelector('.question-word').classList[1].split('-')[1];
+        var type = document.querySelector('.question').classList[1].split('-')[1];
+        console.log(field, numQuest, type);
+        console.log(field.value, this.state.data[type][numQuest][1]);
+        console.log(field.value !== this.state.data[type][numQuest][1]);
         if (field.value !== this.state.data[type][numQuest][1]) {
-            this.setWrongAnswer();
+            this.setWrongAnswer(type, numQuest);
         }
         else {
             this.setRightAnswer();
         }
-        event.preventDefault();
+        field.value = '';
     }
     renderSwitchParam(type, data) {
         var index = this.state.data[type].indexOf(data);
@@ -60,15 +72,15 @@ class CheckAccent extends React.Component {
                 return (
                     <div className="accent-form-wrapper">
                         <p className={"question quest-" + type}>На какую букву падает ударение в слове <b className={"question-word quest-" + index}>{data[0]}</b></p>
-                        <input type="text" placeholder="Введите ответ" className="answer-field" />
+                        <input type="text" placeholder="Введите ответ" className="answer-field" autoFocus />
                         <button type="submit" className="send-form-field" onClick={this.sendForm}>Проверить</button>
                     </div>
                 );
             case 'whatSyllable':
                 return (
                     <div className="accent-form-wrapper">
-                        <p className="question">На какой слог падает ударение в слове <b className="question-word">{data[0]}</b></p>
-                        <input type="text" placeholder="Введите ответ" className="answer-field" />
+                        <p className={"question quest-" + type}>На какой слог падает ударение в слове <b className={"question-word quest-" + index}>{data[0]}</b></p>
+                        <input type="text" placeholder="Введите ответ" className="answer-field" autoFocus />
                         <button type="submit" className="send-form-field" onClick={this.sendForm}>Проверить</button>
                     </div>
                 );
@@ -81,10 +93,10 @@ class CheckAccent extends React.Component {
         key = key[randomInt(0, key.length-1)];
         var element;
         if (this.state.isWrongAnswer) {
-            element = this.renderWrongAnswer(key);
+            element = this.renderWrongAnswer();
         }
         else {
-            element = this.renderAnswer(key, randomInt(0, 14));
+            element = this.renderAnswer(key, randomInt(0, key.length-1));
         }
         return (
             <div>{element}</div>
